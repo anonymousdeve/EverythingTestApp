@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="articles">Articles</string>
+    <string name="search_for_something">Search For Something</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="content">Content</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="language">Language</string>
+    <string name="submit">Submit</string>
+    <string name="sortBy">Sort by</string>
+    <string name="on_of_the_required_must_have_data">On of the required must have data</string>
+    <string name="no_data">No Data</string>
+</resources>

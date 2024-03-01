@@ -1,0 +1,84 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+apply from: '../dependencies.gradle'
+android {
+    namespace 'test.app.network'
+    compileSdk = versions.compileSdk
+
+    defaultConfig {
+        minSdk = versions.minSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2/\"")
+            buildConfigField("String", "API_KEY", "\"4b54445aa93d4dc387f7fda6a132c6b5\"")
+
+        }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://newsapi.org/v2/\"")
+            buildConfigField("String", "API_KEY", "\"4b54445aa93d4dc387f7fda6a132c6b5\"")
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+}
+
+dependencies {
+    implementation libs.core_ktx
+    // hilt
+    implementation libs.hilt.hilt_android
+    implementation libs.hilt.hilt_worker
+    kapt libs.hilt.kapt_dagger_hilt_compiler
+    kapt libs.hilt.kapt_hilt_android_compiler
+    kapt libs.hilt.kapt_hilt_compiler
+
+    ////////////retrofit for network
+    implementation(libs.retrofit.retrofit2) {
+        exclude group: 'android.net.http'
+        exclude module: 'okhttp'
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    implementation libs.retrofit.logging_interceptor
+    implementation libs.retrofit.okhttp
+    implementation libs.retrofit.converter_gson
+    implementation libs.retrofit.gson
+    ////////////retrofit for network
+
+    implementation libs.lifecycle.runtime
+    implementation libs.lifecycle.livedata_kt
+    implementation libs.lifecycle.viewmodel_kt
+
+    implementation libs.coroutines.android
+    implementation libs.coroutines.cor
+
+
+    implementation libs.runtime_worker
+
+    implementation project(':core')
+
+
+    // test and show api call response in notification
+    // Chunk plugin to track apis response
+    debugImplementation libs.chucker.chuckerDebug
+    releaseImplementation libs.chucker.chuckerRelease
+
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

@@ -1,0 +1,58 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+apply from: '../dependencies.gradle'
+android {
+    namespace 'test.app.core'
+    compileSdk = versions.compileSdk
+
+    defaultConfig {
+        minSdk = versions.minSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+}
+
+dependencies {
+
+
+    implementation libs.core_ktx
+    implementation libs.appcompat
+    implementation libs.material
+
+
+    implementation libs.coroutines.android
+    implementation libs.coroutines.cor
+    implementation libs.lifecycle.runtime
+    implementation libs.lifecycle.livedata_kt
+    implementation libs.lifecycle.viewmodel_kt
+
+    implementation libs.glide
+    implementation libs.retrofit.gson
+
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
